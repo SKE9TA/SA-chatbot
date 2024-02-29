@@ -1,0 +1,121 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="{% static "css/chat.css" %}">
+{% endblock %}
+
+
+{% block allcontent %}        
+<section>
+  {% block side_navbar %}
+  {% include 'base/side_nav.html' %}
+  {% endblock %}
+  <div class="mx-auto ms-lg-80">
+    <section>
+      {% include 'base/top_nav.html' %}      
+    </section>
+    <ul id="chat" class = "position-relative"></ul>
+    <form  onsubmit="event.preventDefault(); sendFormData();"id="messageForm" style="">
+      {% comment %} <div class="pt-5 mb-6 d-flex align-items-center justify-content-around">
+        <div class="mb-6 w-75">
+          <textarea style="font-size: 0.95rem; border-radius:5px;" class="form-control text-" name="query" rows="2" placeholder="Write something..." style="resize: vertical;"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit" data-kind="__elements">Submit</button>
+      </div> {% endcomment %}
+	  <div class="input-group mb-3 mt-3 m-auto" style="width:90%">
+		<input type="text" placeholder="Type a message" name="query" autocomplete="off" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+		<div class="input-group-append">
+		  <button id="button-addon2" type="submit" class="btn btn-primary py-4"> Submit</button>
+		</div>
+	  </div>
+    </form>
+    </div>
+</section>
+{% endblock allcontent %}
+
+
+{% block scripts %}
+{% comment %} <script src="{% static "js/charts-demo.js" %}"></script> {% endcomment %}
+<script>
+
+	function getCookie(name) {
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== '') {
+			const cookies = document.cookie.split(';');
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				if (cookie.substring(0, name.length + 1) === (name + '=')) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+
+
+	function sendFormData() {
+	 // Get the form data
+	 var formData = new FormData(document.getElementById('messageForm'));
+	
+	 // Get the CSRF token value from the cookie
+
+	// Get the form data
+	 var formContents = '';
+        for (var pair of formData.entries()) {
+            formContents += pair[1] + '\n';
+        }
+
+		console.log(formContents)
+	  // Update the chat UI with the received data
+	 addMessageToChat(formContents, true);
+
+	 // clear the form contents
+	 document.getElementById('messageForm').reset();
+
+
+	 // Send the form data to the server
+	 fetch('{% url "chatbot" %}', {
+        method: 'POST',
+        headers: {
+            //'X-CSRFToken': csrfToken
+        },
+        body: formData
+    }).then(response => response.json())
+	 .then(data => {
+		// Update the chat UI with the received data
+		addMessageToChat(data, false)
+	 });
+	}
+
+	function addMessageToChat(message, isUserMessage) {
+		// Create a new chat message element
+		var li = document.createElement('li');
+		li.className = isUserMessage ? 'me' : 'you';
+
+		// Add the message details to the chat message element
+		var divEntete = document.createElement('div');
+		divEntete.className = 'entete';
+
+		var h3 = document.createElement('h3');
+		h3.innerText = new Date().toLocaleTimeString();
+		divEntete.appendChild(h3);
+
+		var h2 = document.createElement('h2');
+		h2.innerText = isUserMessage ? 'Me' : 'Bot';
+		divEntete.appendChild(h2);
+		li.appendChild(divEntete);
+
+		var divMessage = document.createElement('div');
+		divMessage.className = 'message';
+		divMessage.innerText = message;
+		li.appendChild(divMessage);
+
+		// Add the chat message element to the chat
+		var ul = document.getElementById('chat');
+		ul.appendChild(li);
+	   }
+	</script>
+{% endblock %}

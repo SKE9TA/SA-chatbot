@@ -1,0 +1,53 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+
+{% block allcontent %}        
+<section>
+  {% block side_navbar %}
+  {% include 'base/side_nav.html' %}
+  {% endblock %}
+
+  <div class="mx-auto ms-lg-80">
+    <section>
+      {% include 'base/top_nav.html' %}      
+    </section>
+    <section class="py-8">
+      <div class="container">
+        <h2 class="mb-2">
+          <span class="text-warning" contenteditable="false">Upload</span>
+          <span class="text-black" contenteditable="false"> a file</span>
+        </h2>
+        <div class="mb-3 text-center">
+          <form id="formAccountSettings" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="form-control" type="file" id="formFile" name = "document" required accept=".txt"/>
+            <button type="submit" style="background:#f58728; border-color:white;" class="btn btn-primary mt-3">Upload</button>
+          </form>
+        </div>
+      </div>
+      <div class="container mt-10">
+        <h3 class="mb-2">
+          <span class="text-black" contenteditable="false">{{docs.count}} Previously uploaded files</span>
+        </h3>
+
+        <div class="row">
+          {% for doc in docs %}
+          <div class="col-md-4">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Uploaded on</h5>
+                <p class="card-text">{{doc.uploaded_at}}</p>
+                <a href="{{doc.document.url}}" class="btn btn-primary">Download</a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+      </div>
+    </section>
+  </div>
+</section>
+{% endblock allcontent %}
+
+

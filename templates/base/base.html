@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{page_title}}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap">
+    <link rel="stylesheet" href="{% static "css/bootstrap/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "css/message.css" %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static "shiru-assets/shirulogo2.png" %}">
+
+    {% block styles %}
+
+    {% endblock %}
+</head>
+<body>
+
+    {% if messages %}
+    <div class="messages">
+      {% for message in messages %}
+  
+          <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+          </p>
+  
+  
+      {% endfor %}
+    </div>
+    {% endif %}
+
+
+    <div class="">
+        
+        {% block allcontent %}
+    
+            {% block side_navbar %}
+            {% endblock side_navbar %}
+    
+        {% endblock allcontent %}
+    </div>
+    <script src="{% static "js/bootstrap/bootstrap.bundle.min.js" %}"></script>
+    <script src="{% static "js/main.js" %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
+    <script>
+    setTimeout(function() {
+        message = document.getElementsByClassName('messages')
+        message.fadeOut(700);
+    }, 10000); // <-- time in milliseconds
+    
+    
+    </script>
+
+    {% block scripts %}
+
+    {% endblock scripts %}
+</body>
+</html>

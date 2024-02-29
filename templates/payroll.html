@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block allcontent %}        
+<section>
+  {% block side_navbar %}
+  {% include 'base/side_nav.html' %}
+  {% endblock %}
+  <div class="mx-auto ms-lg-80">
+    <section>
+      {% include 'base/top_nav.html' %}      
+    </section>
+    <section class="py-8"><div class="container">
+        <div class="pt-16 pt-md-24 px-8 px-sm-12 px-md-24 text-center bg-primary-dark rounded">
+          <h2 class="mb-2">
+            <span class="text-white" contenteditable="false">This page is</span>
+            <span class="text-warning" contenteditable="true">coming soon</span>
+          </h2>
+          <div class="mw-md mx-auto">
+            <img class="img-fluid" src="{% static "artemis-assets/images/saly.png" %}" alt=""></div>
+        </div>
+      </div>
+    </section>
+    </div>
+</section>
+{% endblock allcontent %}
