@@ -16,7 +16,7 @@ if not os.path.exists(v_db_path):
 
 def init_openai_embeddings():
     embeddings_model = OpenAIEmbeddings(
-        openai_api_key="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",
+        openai_api_key="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",
     )
     return embeddings_model
 
@@ -27,9 +27,7 @@ try:
         os.getcwd(),
         "media",
         "documents",
-        "Accounts Receivable_INT4.1.docx",
-        "Residence iEnabler INT 4.1.docx",
-
+        "Adapt IT Consulting and Training.docx",
         
     )
 

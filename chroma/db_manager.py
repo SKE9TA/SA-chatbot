@@ -18,7 +18,7 @@ class VecotrDBManager:
 
     def init_openai_embeddings(self):
         embeddings_model = OpenAIEmbeddings(
-            openai_api_key="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",
+            openai_api_key="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",
         )
         return embeddings_model
 
@@ -38,7 +38,7 @@ class VecotrDBManager:
     def create_qa_chain(self):
         logger.info("Creating QA chain...")
         llm = OpenAI(
-            openai_api_key="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",
+            openai_api_key="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",
         )
         qa_chain = RetrievalQA.from_chain_type(
             llm=llm,
